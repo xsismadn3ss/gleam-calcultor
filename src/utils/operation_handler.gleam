@@ -56,6 +56,7 @@ pub type OperationError {
 
 /// Manejar operación
 /// Espera un opción valida y devuelve el resultado de la operación
+///
 /// Se encarga de hacer toda la validación y manejo de errores
 pub fn handle_operation(option: String) -> Result(String, OperationError) {
   let option = string.trim(option)
