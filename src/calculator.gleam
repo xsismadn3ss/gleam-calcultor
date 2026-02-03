@@ -6,7 +6,7 @@ import utils/operation_handler.{handle_operation}
 pub fn main() -> Nil {
   io.println(
     "Escribe una opción:
-    1. Sumar \t2. Restar \t3. Multiplicar \t4. Dividir",
+    \r1. Sumar \t2. Restar \t3. Multiplicar \t4. Dividir",
   )
 
   // Leer solo UNA línea para la opción
