@@ -1,7 +1,6 @@
 import gleam/yielder
 
 pub type InputError {
-  NotAnInteger(String)
   NotInputRead
 }
 
