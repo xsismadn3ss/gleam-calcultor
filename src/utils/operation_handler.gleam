@@ -4,7 +4,7 @@ import gleam/result
 import gleam/string
 import stdin
 import utils/arithmetics
-import utils/input.{type InputError, NotInputRead, get_input}
+import utils/input.{get_input}
 
 type InvalidOperator {
   InvalidOperator(String)
