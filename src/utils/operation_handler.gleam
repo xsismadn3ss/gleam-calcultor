@@ -4,23 +4,33 @@ import gleam/result
 import gleam/string
 import stdin
 import utils/arithmetics
-import utils/input.{type InputError, NotAnInteger, NotInputRead, get_input}
+import utils/input.{type InputError, NotInputRead, get_input}
 
-fn get_operator() -> Result(arithmetics.PairInput, InputError) {
+type InvalidOperator {
+  InvalidOperator(String)
+}
+
+fn get_operator() -> Result(arithmetics.PairInput, InvalidOperator) {
   io.println("Escribe el primer número:")
-  use text1 <- result.try(stdin.read_lines() |> get_input)
+  use text1 <- result.try(
+    get_input(stdin.read_lines())
+    |> result.replace_error(InvalidOperator("No se pudo leer la entrada")),
+  )
 
   use a <- result.try(
     int.parse(string.trim(text1))
-    |> result.replace_error(NotAnInteger(text1)),
+    |> result.replace_error(InvalidOperator(text1)),
   )
 
   io.println("Escribe el segundo número:")
-  use text2 <- result.try(stdin.read_lines() |> get_input)
+  use text2 <- result.try(
+    get_input(stdin.read_lines())
+    |> result.replace_error(InvalidOperator("No se pudo leer la entrada")),
+  )
 
   use b <- result.try(
     int.parse(string.trim(text2))
-    |> result.replace_error(NotAnInteger(text2)),
+    |> result.replace_error(InvalidOperator(text2)),
   )
 
   Ok(arithmetics.PairInput(a: a, b: b))
@@ -36,9 +46,7 @@ fn get_result(
         Error(msg) -> Ok(msg)
       }
     }
-    Error(NotInputRead) -> Error("No se pudo leer la entrada")
-    Error(NotAnInteger(msg)) ->
-      Error("'" <> string.trim(msg) <> "' no es un número válido")
+    Error(InvalidOperator(msg)) -> Error(msg)
   }
 }
 
