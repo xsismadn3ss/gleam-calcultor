@@ -3,10 +3,11 @@ import domain/operation.{
   Subtract,
 }
 import gleam/int
+import gleam/string
 
 /// Parse un opción a un tipo Operation
 pub fn parse_operation(input: String) -> Result(Operation, CalculatorError) {
-  case input {
+  case string.trim(input) {
     "1" -> Ok(Add)
     "2" -> Ok(Subtract)
     "3" -> Ok(Multiply)
@@ -18,7 +19,7 @@ pub fn parse_operation(input: String) -> Result(Operation, CalculatorError) {
 /// Parsea un número de string a entero
 pub fn parse_number(input: String) -> Result(Int, CalculatorError) {
   // convertir string a entero
-  let result = int.parse(input)
+  let result = string.trim(input) |> int.parse
 
   case result {
     Ok(value) -> Ok(value)
