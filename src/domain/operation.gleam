@@ -10,6 +10,7 @@ pub type Operation {
 pub type CalculatorError {
   DivisionByZero
   InvalidOperation
+  InvalidInput(String)
 }
 
 /// Representa una operación matemática
