@@ -16,12 +16,12 @@ pub fn run() {
   )
   // obtener primer operando
   use operand_1 <- result.try(
-    get_operand()
+    get_operand("Ingresa el primer número: ")
     |> result.map_error(format_error),
   )
   // obtener segundo operando
   use operand_2 <- result.try(
-    get_operand()
+    get_operand("Ingresa el segundo número: ")
     |> result.map_error(format_error),
   )
 
@@ -48,19 +48,12 @@ fn get_operation() {
   }
 }
 
-fn get_operand() {
+fn get_operand(message: String) {
   // obtener numeros
-  use operand_1 <- result.try(
-    prompt("Ingresa el primer número: ")
-    |> result.replace_error(operation.InvalidInput("El texto es invalido")),
+  use num <- result.try(
+    prompt(message)
+    |> result.try(parse_number),
   )
 
-  use num_1 <- result.try(
-    parse_number(operand_1)
-    |> result.replace_error(operation.InvalidInput(
-      "El texto ingresado no es un número entero",
-    )),
-  )
-
-  Ok(num_1)
+  Ok(num)
 }
